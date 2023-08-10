@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "478172761147",
+    "project_id": "xpressme-4567d",
+    "storage_bucket": "xpressme-4567d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478172761147:android:f0c0b6dc6f0ca6c324e01e",
+        "android_client_info": {
+          "package_name": "com.example.xpressme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478172761147-mmd69mjb7rrullqei98ha54dt1bao00h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANihdXILj4GBm2IVTKcBYtVIgAy1evxcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478172761147-mmd69mjb7rrullqei98ha54dt1bao00h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
