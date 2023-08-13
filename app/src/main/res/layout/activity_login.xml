@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@color/app_color">
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/gradient_background">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:layout_marginTop="-13dp">
+
+        <RelativeLayout
+            android:id="@+id/form_body"
+            android:layout_width="500dp"
+            android:layout_height="600dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/form_color_with_border">
+
+            <TextView
+                android:id="@+id/login_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/app_font"
+                android:text="התחברות"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/email_user_input"
+                android:layout_width="400dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/login_textview"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/edittext_color_with_border"
+                android:hint="אימייל"
+                android:inputType="textEmailAddress"
+                android:paddingStart="15sp"
+                android:paddingEnd="15sp" />
+
+            <!--            כרגע זה לא סיסמה! התווים לא מוסתרים, יש באג באנדרואיד סטודיו שלא מתוקן.-->
+            <!--            על מנת לתקן יש להאזין לשינוי טקסט בתיבה ולהגדיר -->
+            <!--            שהאינפוט הוא סיסמה ברגע שיש טקסט. כשאין טקסט יש להסיר את האינפוט-->
+            <EditText
+                android:id="@+id/password_user_input"
+                android:layout_width="400dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/email_user_input"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/edittext_color_with_border"
+                android:hint="סיסמה"
+                android:paddingStart="15sp"
+                android:paddingEnd="15sp" />
+
+            <TextView
+                android:id="@+id/forget_password_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/password_user_input"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:text="שכחת סיסמה?" />
+
+            <Button
+                android:id="@+id/login_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/forget_password_textview"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:text="התחברות"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/dont_have_account_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/login_btn"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="30dp"
+                android:text="אין לך חשבון?" />
+
+            <TextView
+                android:id="@+id/create_account_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dont_have_account_textview"
+                android:layout_centerInParent="true"
+                android:text="@string/create_account_text_view"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>
