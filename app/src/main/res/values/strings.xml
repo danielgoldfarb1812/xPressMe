@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">xPressMe</string>
-    <string name="create_account_text_view"><u>ליצירת חשבון</u></string>
+    <string name="create_account_text_view"><u>Create one now!</u></string>
+    <string name="login_now_text_view"><u>Login now!</u></string>
+    <string name="invalid_email">invalid email!</string>
+    <string name="password_error_length">password must be at least 6 chars</string>
+    <string name="password_error_match">passwords don\'t match!</string>
+    <string name="account_create_success_verify">account created successfully!\ncheck your email for verification</string>
+    <string name="email_verification_error">email not verified.\nplease verify your email</string>
 </resources>

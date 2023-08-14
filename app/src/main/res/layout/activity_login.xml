@@ -39,7 +39,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/app_font"
-                android:text="התחברות"
+                android:text="Login"
                 android:textColor="@color/black"
                 android:textSize="30sp" />
 
@@ -51,14 +51,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/edittext_color_with_border"
-                android:hint="אימייל"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:paddingStart="15sp"
-                android:paddingEnd="15sp" />
+                android:paddingStart="15sp" />
 
-            <!--            כרגע זה לא סיסמה! התווים לא מוסתרים, יש באג באנדרואיד סטודיו שלא מתוקן.-->
-            <!--            על מנת לתקן יש להאזין לשינוי טקסט בתיבה ולהגדיר -->
-            <!--            שהאינפוט הוא סיסמה ברגע שיש טקסט. כשאין טקסט יש להסיר את האינפוט-->
             <EditText
                 android:id="@+id/password_user_input"
                 android:layout_width="400dp"
@@ -66,10 +62,10 @@
                 android:layout_below="@id/email_user_input"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
+                android:inputType="textPassword"
                 android:background="@drawable/edittext_color_with_border"
-                android:hint="סיסמה"
-                android:paddingStart="15sp"
-                android:paddingEnd="15sp" />
+                android:hint="Password"
+                android:paddingStart="15sp" />
 
             <TextView
                 android:id="@+id/forget_password_textview"
@@ -78,7 +74,7 @@
                 android:layout_below="@id/password_user_input"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="30dp"
-                android:text="שכחת סיסמה?" />
+                android:text="Forgot password?" />
 
             <Button
                 android:id="@+id/login_btn"
@@ -87,7 +83,7 @@
                 android:layout_below="@id/forget_password_textview"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="30dp"
-                android:text="התחברות"
+                android:text="Login"
                 android:textColor="@color/black" />
 
             <TextView
@@ -97,7 +93,7 @@
                 android:layout_below="@id/login_btn"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="30dp"
-                android:text="אין לך חשבון?" />
+                android:text="Don't have an account?" />
 
             <TextView
                 android:id="@+id/create_account_textview"

@@ -7,11 +7,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,36 +29,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initViews();
         initButtons();
-        addPasswordListener();
+
     }
 
-    //this function fixes the right to left password hint
-    private void addPasswordListener(){
-        passwordUserInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() > 0){
-                    passwordUserInput.setInputType(InputType.TYPE_CLASS_TEXT |
-                            InputType.TYPE_TEXT_VARIATION_PASSWORD |
-                            InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                            passwordUserInput.setSelection(editable.length());
-                }
-                else{
-                    passwordUserInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-                }
-            }
-        });
-    }
     private void initViews() {
         emailUserInput = findViewById(R.id.email_user_input);
         passwordUserInput = findViewById(R.id.password_user_input);
@@ -65,15 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utility.showToast(LoginActivity.this, "no login method yet");
-                return;
+                loginUser();
             }
         });
         createAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-                return;
+                finish();
             }
         });
         forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +61,59 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
         });
+    }
+
+    private void loginUser() {
+        // קבלת הקלט מתיבת הטקסט לאימייל ולסיסמה
+        String email = emailUserInput.getText().toString();
+        String password = passwordUserInput.getText().toString();
+
+        // אימות תקינות הקלט
+        boolean isValidated = validateData(email, password);
+        if (!isValidated){
+            return;
+        }
+
+        // התחברות עם האימייל והסיסמה לפיירבייס
+        loginWithFirebase(email, password);
+    }
+
+    private void loginWithFirebase(String email, String password) {
+        // התחברות לפיירבייס באמצעות אימייל וסיסמה
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            // בסיום התהליך, שינוי התצוגה בהתאם לתוצאה
+            if (task.isSuccessful()){
+                // התחברות הצליחה
+                if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()){
+                    // האימייל מאומת - עבור למסך הראשי
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                }
+                else{
+                    // האימייל אינו מאומת - הודעה למשתמש
+                    Utility.showToast(LoginActivity.this, getResources().getString(R.string.email_verification_error));
+                }
+            }
+            else{
+                // התחברות נכשלה - הודעת שגיאה למשתמש
+                Utility.showToast(LoginActivity.this, Objects.requireNonNull(task.getException()).getLocalizedMessage());
+            }
+        });
+    }
+
+    private boolean validateData(String email, String password) {
+        // אימות הקלט שהוזן על ידי המשתמש
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            emailUserInput.setError(getResources().getString(R.string.invalid_email));
+            return false;
+        }
+        if (password.length() < 6){
+            passwordUserInput.setError(getResources().getString(R.string.password_error_length));
+            return false;
+        }
+        return true;
     }
 
 }
