@@ -11,7 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -19,6 +23,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText firstNameEditText, lastNameEditText, emailEditText, passwordEditText, passwordConfirmEditText, phoneEditText;
     TextView loginTextView;
     Button registerBtn;
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,15 +61,30 @@ public class RegisterActivity extends AppCompatActivity {
         createAccountInFirebase(email, password);
     }
 
+    private User createUserObject(){
+        // get all texts from edittext
+        String firstName = firstNameEditText.getText().toString();
+        String lastName = lastNameEditText.getText().toString();
+        String email = emailEditText.getText().toString();
+        String phone = phoneEditText.getText().toString();
+        // check for phone input and call the appropriate constructor
+        if (phone.isEmpty()){
+            return new User(firstName,lastName,email);
+        }
+        return new User(firstName,lastName,email,phone);
+    }
     private void createAccountInFirebase(String email, String password) {
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this,
                 task -> {
 
                     if (task.isSuccessful()){
+                        // create new user collection
+                        User newUserObject = createUserObject();
+                        newUserObject.setuId(firebaseAuth.getCurrentUser().getUid());
                         // יצירת החשבון בהצלחה
                         Utility.showToast(RegisterActivity.this, getResources().getString(R.string.account_create_success_verify));
                         Objects.requireNonNull(firebaseAuth.getCurrentUser()).sendEmailVerification();
+                        insertUserIntoFirestore(newUserObject);
                         firebaseAuth.signOut();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();
@@ -73,6 +94,27 @@ public class RegisterActivity extends AppCompatActivity {
                         Utility.showToast(RegisterActivity.this, Objects.requireNonNull(task.getException()).getLocalizedMessage());
                     }
                 });
+    }
+
+    private void insertUserIntoFirestore(User user) {
+        // create ref to document with the user UID
+        DocumentReference userDocumentRef = firebaseFirestore.collection("users").document(user.getuId());
+
+
+        // convert user object to map
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("firstName", user.getFirstName());
+        userMap.put("lastName", user.getLastName());
+        userMap.put("email", user.getEmail());
+        if (!user.getPhone().isEmpty()){
+            userMap.put("phone", user.getPhone());
+        }
+        // add the user data to firestore
+        userDocumentRef.set(userMap).addOnSuccessListener(aVoid -> {
+            return;
+        }).addOnFailureListener(e -> {
+            return;
+        });
     }
 
     private boolean validateData(String email, String password, String confirmPassword) {
@@ -103,5 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
         phoneEditText = findViewById(R.id.phone_user_input);
         loginTextView = findViewById(R.id.login_now_textview);
         registerBtn = findViewById(R.id.register_btn);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 }
