@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateBoardActivity"
+    android:background="@color/app_color">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/gradient_background">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/board_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/jokerman_regular"
+        android:text="Board Name"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+    <EditText
+        android:id="@+id/board_name_edittext"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:background="@drawable/edittext_color_with_border"
+        android:hint="Enter board name here"
+        android:paddingStart="10dp"
+        android:layout_below="@id/board_name_textview"
+        android:layout_centerHorizontal="true"/>
+    <Button
+        android:id="@+id/btn_confirm_board_name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/board_name_edittext"
+        android:backgroundTint="@color/white"
+        android:text="Confirm board name"
+        android:textColor="@color/black"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/button_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/btn_confirm_board_name"/>
+
+
+</RelativeLayout>
