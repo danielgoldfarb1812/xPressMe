@@ -10,7 +10,7 @@ public class CommunicationBoard {
         this.uId = uId;
         this.boardName = boardName;
         this.boardOwnerId = boardOwnerId;
-        this.buttons = new Button[15]; // each board has a maximum of 15 buttons
+        this.buttons = new Button[18]; // each board has a maximum of 18 buttons
     }
 
     public String getuId() {

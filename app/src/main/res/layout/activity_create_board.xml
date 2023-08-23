@@ -1,24 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CreateBoardActivity"
     android:background="@color/app_color">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/header"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="150dp"
+        android:orientation="horizontal"
         android:background="@drawable/gradient_background">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/done_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="50dp"
+            android:textColor="@color/white"
+            android:background="@drawable/gradient_button_bg"
+            android:text="Done"/>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:src="@drawable/app_logo"/>
+            android:src="@drawable/app_logo" />
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/menu_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:background="@drawable/gradient_button_bg"
+            android:layout_marginEnd="50dp"
+            android:text="Menu"/>
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/board_name_textview"
@@ -52,10 +74,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/button_recycler_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_centerInParent="true"
         android:layout_below="@id/btn_confirm_board_name"/>
+
+
 
 
 </RelativeLayout>
