@@ -64,11 +64,6 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
 
     }
 
-    private void showMessage(String message) {
-        // Create and show a toast message
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public int getItemCount() {
         return buttonList.size();

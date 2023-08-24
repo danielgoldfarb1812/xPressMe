@@ -7,10 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,9 +27,11 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
     Button[] buttonArr = new Button[18];
     FirebaseAuth firebaseAuth;
     private RecyclerView buttonRecyclerView;
+    private PopupWindow popupWindow;
     private ButtonAdapter buttonAdapter;
     private List<Button> buttonList;
     TextView boardNameTextview;
+    View popupView;
     android.widget.Button confirmBoardNameBtn;
     EditText boardNameEdittext;
     androidx.appcompat.widget.AppCompatButton menuBtn, doneBtn;
@@ -47,17 +54,32 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
 
         // Set up click listeners for buttons
         initButtons();
+        // Initialize the popup window
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        popupView = inflater.inflate(R.layout.create_button_popup_menu, null);
+        popupWindow = new PopupWindow(
+                popupView,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                true
+        );
     }
     @Override
     public void onButtonClick(int position) {
         // הפונקציה ליצירת כפתור חדש ושמירתו במערך
         //פה צריך לפתוח תפריט של יצירת כפתור
         // ולאחר סיום, נשמור את הכפתור במערך של הכפתורים
-        showCreateButtonPopupMenu();
+        showPopup();
+
+        // לאחר סיום יצירת הכפתור - שמירתו במערך הכפתורים
         buttonArr[position] = buttonList.get(position);
+
     }
 
-    private void showCreateButtonPopupMenu() {
+    private void showPopup() {
+        // Show the popup window
+        popupWindow.showAtLocation(findViewById(R.id.board_name_textview), Gravity.CENTER, 0, 0);
+
 
     }
 
