@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateBoardActivity extends AppCompatActivity implements ButtonAdapter.ButtonClickListener{
+public class CreateBoardActivity extends AppCompatActivity implements ButtonAdapter.ButtonClickListener, CreateButtonDialogFragment.ButtonCreationDialogListener{
     Button[] buttonArr = new Button[18];
     FirebaseAuth firebaseAuth;
     private RecyclerView buttonRecyclerView;
@@ -69,18 +69,15 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
         // הפונקציה ליצירת כפתור חדש ושמירתו במערך
         //פה צריך לפתוח תפריט של יצירת כפתור
         // ולאחר סיום, נשמור את הכפתור במערך של הכפתורים
-        showPopup();
+        Button newButton = new Button("0", "");
+        showButtonCreationDialog();
 
-        // לאחר סיום יצירת הכפתור - שמירתו במערך הכפתורים
-        buttonArr[position] = buttonList.get(position);
 
     }
 
-    private void showPopup() {
-        // Show the popup window
-        popupWindow.showAtLocation(findViewById(R.id.board_name_textview), Gravity.CENTER, 0, 0);
-
-
+    private void showButtonCreationDialog() {
+        CreateButtonDialogFragment dialogFragment = new CreateButtonDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "ButtonCreationDialog");
     }
 
     private void initFirebase() {
@@ -182,5 +179,10 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
         // Set the board title to the entered text
         String boardTitle = boardNameEdittext.getText().toString();
         boardNameTextview.setText(boardTitle);
+    }
+
+    @Override
+    public void onButtonCreated(Button button) {
+
     }
 }
