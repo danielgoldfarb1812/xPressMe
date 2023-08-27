@@ -10,7 +10,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
@@ -21,17 +20,31 @@ public class CreateButtonDialogFragment extends DialogFragment {
     public interface ButtonCreationDialogListener {
         void onButtonCreated(Button button);
     }
+
     // Declare necessary views and widgets
     private EditText btnLabelEditText, btnMessageEditText;
     private TextView btnTargetTextView;
     private ImageView imageView;
     private CheckBox hasTargetCheckBox;
     private AppCompatButton saveBtn, cancelBtn, deleteBtn;
+    private int position; // Added to track which button was clicked
+
+    // Create a new instance of the dialog fragment with a position argument
+    public static CreateButtonDialogFragment newInstance(int position) {
+        CreateButtonDialogFragment fragment = new CreateButtonDialogFragment();
+        Bundle args = new Bundle();
+        args.putInt("position", position);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.create_button_popup_menu, container, false);
+
+        // Retrieve the position from arguments
+        position = getArguments().getInt("position", -1);
 
         initViews(view);
         initButtons(view);
@@ -49,18 +62,20 @@ public class CreateButtonDialogFragment extends DialogFragment {
         cancelBtn = view.findViewById(R.id.btn_cancel);
         deleteBtn = view.findViewById(R.id.btn_delete);
     }
+
     private void initButtons(View view) {
-        // function to save a button when all required fields are full
+        // Function to save a button when all required fields are full
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // for testing, only create label and message
+                // For testing, only create label and message
                 String btnLabel = btnLabelEditText.getText().toString();
                 String btnMessage = btnMessageEditText.getText().toString();
 
                 Button button = new Button("0", btnLabel);
                 button.setTtsMessage(btnMessage);
-                Utility.showToast(getContext(), "Button created");
+                Utility.showToast(getContext(), "Button created at pos" + position);
+
                 // Check if the activity implements the listener interface
                 if (getActivity() instanceof ButtonCreationDialogListener) {
                     // Send the data to the activity
@@ -68,7 +83,7 @@ public class CreateButtonDialogFragment extends DialogFragment {
                     listener.onButtonCreated(button);
                 }
 
-                // close the dialog
+                // Close the dialog
                 dismiss();
             }
         });
@@ -77,7 +92,6 @@ public class CreateButtonDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 showCancellationAlert();
-
             }
         });
     }
@@ -95,11 +109,9 @@ public class CreateButtonDialogFragment extends DialogFragment {
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        return;
+                        // Do nothing, stay in the dialog
                     }
                 })
                 .show();
     }
-
-
 }

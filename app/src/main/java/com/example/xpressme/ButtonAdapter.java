@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
-
     private List<Button> buttonList;
     private Context context;
     private ButtonClickListener buttonClickListener;
-    public void setButtonClickListener(ButtonClickListener listener){
+    public void setButtonClickListener(ButtonClickListener listener) {
         this.buttonClickListener = listener;
     }
 
@@ -24,6 +23,7 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
         this.buttonList = buttonList;
         this.context = context; // Initialize the context
     }
+
     public interface ButtonClickListener {
         void onButtonClick(int position);
     }
@@ -32,24 +32,19 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
     @Override
     public ButtonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
-
-
-            // Inflate the layout for regular buttons
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.button_item_layout, parent, false);
-
-
+        // Inflate the layout for regular buttons
+        itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.button_item_layout, parent, false);
         return new ButtonViewHolder(itemView);
     }
 
-    @NonNull
     @Override
     public void onBindViewHolder(@NonNull ButtonViewHolder holder, int position) {
         Button button = buttonList.get(position);
         holder.bind(button);
 
         // Handle click events for regular buttons
-        holder.buttonImageView.setImageResource(R.drawable.plus_icon);
+
         holder.buttonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,13 +56,10 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
                 }
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
         return buttonList.size();
     }
-
-
 }

@@ -35,6 +35,7 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
     android.widget.Button confirmBoardNameBtn;
     EditText boardNameEdittext;
     androidx.appcompat.widget.AppCompatButton menuBtn, doneBtn;
+    private int dialogFragmentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +67,24 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
     }
     @Override
     public void onButtonClick(int position) {
-        // הפונקציה ליצירת כפתור חדש ושמירתו במערך
-        //פה צריך לפתוח תפריט של יצירת כפתור
-        // ולאחר סיום, נשמור את הכפתור במערך של הכפתורים
-        Button newButton = new Button("0", "");
-        showButtonCreationDialog();
-
-
+        // Show the dialog fragment when a button is clicked and pass the position
+        showButtonCreationDialog(position);
     }
 
-    private void showButtonCreationDialog() {
-        CreateButtonDialogFragment dialogFragment = new CreateButtonDialogFragment();
+    private void showButtonCreationDialog(int position) {
+        dialogFragmentPosition = position; // Set the dialogFragmentPosition
+        CreateButtonDialogFragment dialogFragment = CreateButtonDialogFragment.newInstance(position);
         dialogFragment.show(getSupportFragmentManager(), "ButtonCreationDialog");
+    }
+
+    @Override
+    public void onButtonCreated(Button button) {
+        // Add the created button to the list at the specified position
+        int position = dialogFragmentPosition;
+        if (position >= 0 && position < buttonList.size()) {
+            buttonList.set(position, button);
+            buttonAdapter.notifyItemChanged(position);
+        }
     }
 
     private void initFirebase() {
@@ -181,8 +188,5 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
         boardNameTextview.setText(boardTitle);
     }
 
-    @Override
-    public void onButtonCreated(Button button) {
 
-    }
 }

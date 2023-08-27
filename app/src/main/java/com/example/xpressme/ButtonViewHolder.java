@@ -19,7 +19,6 @@ public class ButtonViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Button button) {
         buttonImageView.setImageResource(R.drawable.plus_icon);
-
     }
 }
 
