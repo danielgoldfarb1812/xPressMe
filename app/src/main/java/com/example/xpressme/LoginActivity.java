@@ -4,22 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
+
+
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-
+    FirebaseAuth fAuth;
     EditText emailUserInput, passwordUserInput;
     TextView forgotPasswordTextView, createAccountTextView;
     Button loginBtn;
@@ -39,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotPasswordTextView = findViewById(R.id.forget_password_textview);
         createAccountTextView = findViewById(R.id.create_account_textview);
         loginBtn = findViewById(R.id.login_btn);
+        fAuth = FirebaseAuth.getInstance();
     }
     private void initButtons() {
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -57,8 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utility.showToast(LoginActivity.this, "no forgot password method yet");
-                return;
+                startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
             }
         });
     }
@@ -80,12 +79,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginWithFirebase(String email, String password) {
         // התחברות לפיירבייס באמצעות אימייל וסיסמה
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+
+        fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             // בסיום התהליך, שינוי התצוגה בהתאם לתוצאה
             if (task.isSuccessful()){
                 // התחברות הצליחה
-                if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).isEmailVerified()){
+                if (Objects.requireNonNull(fAuth.getCurrentUser()).isEmailVerified()){
                     // האימייל מאומת - עבור למסך הראשי
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();

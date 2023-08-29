@@ -81,10 +81,13 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
     public void onButtonCreated(Button button) {
         // Add the created button to the list at the specified position
         int position = dialogFragmentPosition;
-        if (position >= 0 && position < buttonList.size()) {
-            buttonList.set(position, button);
-            buttonAdapter.notifyItemChanged(position);
-        }
+
+        buttonList.get(position).setButtonLabel(button.getButtonLabel());
+
+        // כנראה קורא לButtonAdapter.onBindViewHolder
+        buttonAdapter.notifyItemChanged(position);
+        // צריך למצוא דרך לעדכן את הכפתור במיקום הנל מבלי לפגוע באתחול הראשי של כל הכפתורים
+
     }
 
     private void initFirebase() {

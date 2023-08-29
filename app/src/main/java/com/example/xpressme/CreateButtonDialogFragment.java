@@ -2,7 +2,9 @@ package com.example.xpressme;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Locale;
+
 public class CreateButtonDialogFragment extends DialogFragment {
+    // Define the TextToSpeech object to use
+    private TextToSpeech ttsService;
     // Define the interface to communicate data back to the activity
     public interface ButtonCreationDialogListener {
         void onButtonCreated(Button button);
@@ -26,7 +32,7 @@ public class CreateButtonDialogFragment extends DialogFragment {
     private TextView btnTargetTextView;
     private ImageView imageView;
     private CheckBox hasTargetCheckBox;
-    private AppCompatButton saveBtn, cancelBtn, deleteBtn;
+    private AppCompatButton saveBtn, cancelBtn, deleteBtn, testSpeechBtn;
     private int position; // Added to track which button was clicked
 
     // Create a new instance of the dialog fragment with a position argument
@@ -48,10 +54,27 @@ public class CreateButtonDialogFragment extends DialogFragment {
 
         initViews(view);
         initButtons(view);
-
+        initTTS(view);
         return view;
     }
 
+    private void initTTS(View view) {
+        // Initialize the TextToSpeech engine in your onCreate() or onStart() method
+        ttsService = new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+
+            }
+        });
+    }
+    // Implement a method to speak the message
+    private void speakMessage(String message) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ttsService.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            ttsService.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
     private void initViews(View view) {
         btnLabelEditText = view.findViewById(R.id.btn_label_edittext);
         btnMessageEditText = view.findViewById(R.id.btn_message_edittext);
@@ -61,9 +84,19 @@ public class CreateButtonDialogFragment extends DialogFragment {
         saveBtn = view.findViewById(R.id.btn_save);
         cancelBtn = view.findViewById(R.id.btn_cancel);
         deleteBtn = view.findViewById(R.id.btn_delete);
+        testSpeechBtn = view.findViewById(R.id.btn_test_audio);
     }
 
     private void initButtons(View view) {
+        // onClickListener to test button message using TTS library
+        testSpeechBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // get the string out of the message edittext and sound it out
+                String messageText = btnMessageEditText.getText().toString();
+                speakMessage(messageText);
+            }
+        });
         // Function to save a button when all required fields are full
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +130,7 @@ public class CreateButtonDialogFragment extends DialogFragment {
     }
 
     private void showCancellationAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.DarkAlertDialog);
         builder.setTitle("Confirmation")
                 .setMessage("Do you want to cancel?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

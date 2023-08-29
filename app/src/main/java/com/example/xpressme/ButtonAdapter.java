@@ -38,11 +38,15 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
         return new ButtonViewHolder(itemView);
     }
 
+    // צריך לשים לב לא לקרוא למתודה הזאת פעמיים. נקרא לה רק בפעם הראשונה שהדף נטען
+    // צריך למצוא מתודה אחרת שתיקרא בכל פעם שמשנים כפתור
     @Override
     public void onBindViewHolder(@NonNull ButtonViewHolder holder, int position) {
         Button button = buttonList.get(position);
         holder.bind(button);
-
+        holder.buttonTextView.setText(buttonList.get(position).getButtonLabel());
+        holder.buttonTextView.setVisibility(View.VISIBLE);
+        //holder.buttonImageView.setVisibility(View.GONE);
         // Handle click events for regular buttons
 
         holder.buttonImageView.setOnClickListener(new View.OnClickListener() {
