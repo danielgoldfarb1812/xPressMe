@@ -147,8 +147,12 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utility.showToast(CreateBoardActivity.this, boardButtonArr[0].getButtonLabel());
-                speakMessage(boardButtonArr[0].getTtsMessage());
+                /*
+                 * TODO:
+                 *  implement logic to create new board with the button array
+                 *  and save the new board to firestore database
+                 */
+
             }
         });
         menuBtn.setOnClickListener(new View.OnClickListener() {
