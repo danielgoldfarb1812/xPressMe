@@ -4,13 +4,13 @@ public class CommunicationBoard {
     String uId;
     String boardName;
     String boardOwnerId;
-    Button[] buttons;
+    BoardButton[] boardButtons;
 
     public CommunicationBoard(String uId, String boardName, String boardOwnerId){
         this.uId = uId;
         this.boardName = boardName;
         this.boardOwnerId = boardOwnerId;
-        this.buttons = new Button[18]; // each board has a maximum of 18 buttons
+        this.boardButtons = new BoardButton[18]; // each board has a maximum of 18 buttons
     }
 
     public String getuId() {
@@ -37,12 +37,12 @@ public class CommunicationBoard {
         this.boardOwnerId = boardOwnerId;
     }
 
-    public Button[] getButtons() {
-        return buttons;
+    public BoardButton[] getButtons() {
+        return boardButtons;
     }
 
-    public void setButtons(Button[] buttons) {
-        this.buttons = buttons;
+    public void setButtons(BoardButton[] boardButtons) {
+        this.boardButtons = boardButtons;
     }
 
 }

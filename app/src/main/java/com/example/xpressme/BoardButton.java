@@ -1,10 +1,10 @@
 package com.example.xpressme;
 
-public class Button {
-    String uId;
+public class BoardButton {
     String buttonLabel;
     String ttsMessage;
     String imageUrl;
+    int imgDrawable;
     ButtonAction buttonAction;
     String targetBoard; // move to another board (targetBoard.uId)
 
@@ -14,17 +14,17 @@ public class Button {
     }
 
     // a new button consists of id and label. when creating a button we will call the setters
-    public Button(String uId, String buttonLabel){
-        this.uId = uId;
+    public BoardButton(String buttonLabel, int imgDrawable){
         this.buttonLabel = buttonLabel;
+        this.setImgDrawable(imgDrawable);
     }
 
-    public String getuId() {
-        return uId;
+    public int getImgDrawable() {
+        return imgDrawable;
     }
 
-    public void setuId(String uId) {
-        this.uId = uId;
+    public void setImgDrawable(int imgDrawable) {
+        this.imgDrawable = imgDrawable;
     }
 
     public String getButtonLabel() {

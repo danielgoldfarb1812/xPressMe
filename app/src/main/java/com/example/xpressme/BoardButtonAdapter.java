@@ -4,23 +4,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
-    private List<Button> buttonList;
+public class BoardButtonAdapter extends RecyclerView.Adapter<BoardButtonViewHolder> {
+    private ArrayList<BoardButton> boardButtonList;
     private Context context;
     private ButtonClickListener buttonClickListener;
     public void setButtonClickListener(ButtonClickListener listener) {
         this.buttonClickListener = listener;
     }
 
-    public ButtonAdapter(List<Button> buttonList, Context context) {
-        this.buttonList = buttonList;
+    public BoardButtonAdapter(ArrayList<BoardButton> boardButtonList, Context context) {
+        this.boardButtonList = boardButtonList;
         this.context = context; // Initialize the context
     }
 
@@ -30,29 +29,22 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
 
     @NonNull
     @Override
-    public ButtonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BoardButtonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
         // Inflate the layout for regular buttons
         itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.button_item_layout, parent, false);
-        return new ButtonViewHolder(itemView);
+        return new BoardButtonViewHolder(itemView);
     }
 
-    // צריך לשים לב לא לקרוא למתודה הזאת פעמיים. נקרא לה רק בפעם הראשונה שהדף נטען
-    // צריך למצוא מתודה אחרת שתיקרא בכל פעם שמשנים כפתור
     @Override
-    public void onBindViewHolder(@NonNull ButtonViewHolder holder, int position) {
-        Button button = buttonList.get(position);
-        holder.bind(button);
-        holder.buttonTextView.setText(buttonList.get(position).getButtonLabel());
-        holder.buttonTextView.setVisibility(View.VISIBLE);
-        //holder.buttonImageView.setVisibility(View.GONE);
-        // Handle click events for regular buttons
-
-        holder.buttonImageView.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull BoardButtonViewHolder holder, int position) {
+        BoardButton boardButton = boardButtonList.get(position);
+        holder.bind(boardButton);
+        holder.buttonHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int btnPosition = holder.getAdapterPosition(); // Get the button position (id)
+                int btnPosition = holder.getAdapterPosition();
                 // Check if the position is valid
                 if (btnPosition != RecyclerView.NO_POSITION && buttonClickListener != null) {
                     // Notify the listener that a button was clicked and pass the position
@@ -64,6 +56,6 @@ public class ButtonAdapter extends RecyclerView.Adapter<ButtonViewHolder> {
 
     @Override
     public int getItemCount() {
-        return buttonList.size();
+        return boardButtonList.size();
     }
 }

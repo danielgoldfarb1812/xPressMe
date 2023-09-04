@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/button_holder"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
     android:layout_marginBottom="20dp"
     android:layout_marginStart="30dp"
     android:background="@drawable/edittext_color_with_border">
 
+
+
+    <ImageView
+        android:padding="22sp"
+        android:id="@+id/button_image_view"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/plus_icon" />
     <TextView
         android:id="@+id/button_label_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="button label"
-        android:visibility="gone"/>
-
-    <ImageView
-        android:id="@+id/button_image_view"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/plus_icon" />
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>

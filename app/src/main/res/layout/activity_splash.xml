@@ -25,18 +25,42 @@
       android:layout_marginTop="100sp"/>
 </RelativeLayout>
 
-
-  <ImageView
-      android:id="@+id/app_logo_imageview"
+  <LinearLayout
+      android:id="@+id/body"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:src="@drawable/app_logo"
-      android:layout_below="@id/header"/>
+    android:layout_below="@id/header"
+      android:orientation="horizontal"
+      android:weightSum="9"
+    >
+    <ImageView
+        android:id="@+id/gif_left"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/butterflies_gif"
+        android:layout_weight="3"/>
+
+    <ImageView
+        android:id="@+id/app_logo_imageview"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/app_logo"
+        android:layout_weight="3"
+        android:layout_below="@id/header"/>
+
+    <ImageView
+        android:id="@+id/gif_right"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:src="@drawable/butterflies_gif"/>
+  </LinearLayout>
 
   <ProgressBar
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
-      android:layout_below="@id/app_logo_imageview"
+      android:layout_below="@id/body"
       android:layout_centerInParent="true" />
 
 

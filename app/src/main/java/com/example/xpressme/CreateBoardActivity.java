@@ -1,16 +1,15 @@
 package com.example.xpressme;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,15 +20,15 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class CreateBoardActivity extends AppCompatActivity implements ButtonAdapter.ButtonClickListener, CreateButtonDialogFragment.ButtonCreationDialogListener{
-    Button[] buttonArr = new Button[18];
+public class CreateBoardActivity extends AppCompatActivity implements BoardButtonAdapter.ButtonClickListener, CreateButtonDialogFragment.ButtonCreationDialogListener{
+    TextToSpeech ttsService;
+    static BoardButton[] boardButtonArr = new BoardButton[18];
     FirebaseAuth firebaseAuth;
     private RecyclerView buttonRecyclerView;
     private PopupWindow popupWindow;
-    private ButtonAdapter buttonAdapter;
-    private List<Button> buttonList;
+    private BoardButtonAdapter boardButtonAdapter;
+    ArrayList<BoardButton> boardButtonList;
     TextView boardNameTextview;
     View popupView;
     android.widget.Button confirmBoardNameBtn;
@@ -42,7 +41,7 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_board);
 
-
+        initTTS();
 
         // Initialize Firebase
         initFirebase();
@@ -51,7 +50,7 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
         initViews();
 
         // Pass the activity as a listener to the adapter
-        buttonAdapter.setButtonClickListener(CreateBoardActivity.this);
+        boardButtonAdapter.setButtonClickListener(CreateBoardActivity.this);
 
         // Set up click listeners for buttons
         initButtons();
@@ -78,15 +77,13 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
     }
 
     @Override
-    public void onButtonCreated(Button button) {
+    public void onButtonCreated(BoardButton boardButton) {
         // Add the created button to the list at the specified position
         int position = dialogFragmentPosition;
 
-        buttonList.get(position).setButtonLabel(button.getButtonLabel());
-
-        // כנראה קורא לButtonAdapter.onBindViewHolder
-        buttonAdapter.notifyItemChanged(position);
-        // צריך למצוא דרך לעדכן את הכפתור במיקום הנל מבלי לפגוע באתחול הראשי של כל הכפתורים
+        boardButtonList.get(position).setButtonLabel(boardButton.getButtonLabel());
+        boardButtonList.get(position).setImgDrawable(boardButton.getImgDrawable());
+        boardButtonAdapter.notifyItemChanged(position);
 
     }
 
@@ -112,9 +109,9 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
 
     private void setUpButtonGrid() {
         // Set up the RecyclerView
-        buttonList = new ArrayList<>();
-        buttonAdapter = new ButtonAdapter(buttonList, this); // Pass the activity context
-        buttonRecyclerView.setAdapter(buttonAdapter);
+        boardButtonList = new ArrayList<>();
+        boardButtonAdapter = new BoardButtonAdapter(boardButtonList, this); // Pass the activity context
+        buttonRecyclerView.setAdapter(boardButtonAdapter);
 
         // Use a GridLayoutManager with a span count of 6
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 6);
@@ -124,13 +121,36 @@ public class CreateBoardActivity extends AppCompatActivity implements ButtonAdap
     private void populateButtonList() {
         // Populate the button list with empty buttons
         for (int i = 0; i < 18; i++) {
-            Button emptyButton = new Button(String.valueOf(i), "");
-            buttonList.add(emptyButton);
+            BoardButton emptyBoardButton = new BoardButton("", R.drawable.plus_icon);
+            boardButtonList.add(emptyBoardButton);
         }
     }
+    private void initTTS() {
+        // Initialize the TextToSpeech engine in your onCreate() or onStart() method
+        ttsService = new TextToSpeech(CreateBoardActivity.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
 
+            }
+        });
+    }
+    // Implement a method to speak the message
+    private void speakMessage(String message) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ttsService.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
+        } else {
+            ttsService.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
     private void initButtons() {
         // Set up click listeners for buttons
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.showToast(CreateBoardActivity.this, boardButtonArr[0].getButtonLabel());
+                speakMessage(boardButtonArr[0].getTtsMessage());
+            }
+        });
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
