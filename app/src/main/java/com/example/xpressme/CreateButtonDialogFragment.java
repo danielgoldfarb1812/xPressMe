@@ -149,8 +149,6 @@ public class CreateButtonDialogFragment extends DialogFragment implements ImageS
                 BoardButton boardButton = new BoardButton(btnLabel, btnDrawable);
                 boardButton.setTtsMessage(btnMessage);
 
-                // set the saved button to the array (which will be sent as parameter to the board when done)
-                CreateBoardActivity.boardButtonArr[position] = boardButton;
                 // Check if the activity implements the listener interface
                 if (getActivity() instanceof ButtonCreationDialogListener) {
                     // Send the data to the activity

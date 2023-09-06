@@ -1,25 +1,19 @@
 package com.example.xpressme;
 
+import java.util.ArrayList;
+
 public class CommunicationBoard {
-    String uId;
     String boardName;
     String boardOwnerId;
-    BoardButton[] boardButtons;
+    ArrayList<BoardButton> boardButtons;
 
-    public CommunicationBoard(String uId, String boardName, String boardOwnerId){
-        this.uId = uId;
+    // default constructor for presets. no need for owner id yet
+    public CommunicationBoard(String boardName, ArrayList<BoardButton> btnArr){
+
         this.boardName = boardName;
-        this.boardOwnerId = boardOwnerId;
-        this.boardButtons = new BoardButton[18]; // each board has a maximum of 18 buttons
+        this.boardButtons = btnArr;
     }
 
-    public String getuId() {
-        return uId;
-    }
-
-    public void setuId(String uId) {
-        this.uId = uId;
-    }
 
     public String getBoardName() {
         return boardName;
@@ -37,11 +31,11 @@ public class CommunicationBoard {
         this.boardOwnerId = boardOwnerId;
     }
 
-    public BoardButton[] getButtons() {
+    public ArrayList<BoardButton> getButtons() {
         return boardButtons;
     }
 
-    public void setButtons(BoardButton[] boardButtons) {
+    public void setButtons(ArrayList<BoardButton> boardButtons) {
         this.boardButtons = boardButtons;
     }
 

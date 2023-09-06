@@ -1,5 +1,6 @@
 package com.example.xpressme;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,17 +18,27 @@ import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.grpc.okhttp.internal.Util;
 
 public class CreateBoardActivity extends AppCompatActivity implements BoardButtonAdapter.ButtonClickListener, CreateButtonDialogFragment.ButtonCreationDialogListener{
     TextToSpeech ttsService;
-    static BoardButton[] boardButtonArr = new BoardButton[18];
     FirebaseAuth firebaseAuth;
-    private RecyclerView buttonRecyclerView;
-    private PopupWindow popupWindow;
-    private BoardButtonAdapter boardButtonAdapter;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    RecyclerView buttonRecyclerView;
+    PopupWindow popupWindow;
+    BoardButtonAdapter boardButtonAdapter;
     ArrayList<BoardButton> boardButtonList;
     TextView boardNameTextview;
     View popupView;
@@ -119,14 +130,12 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
     }
 
     private void populateButtonList() {
-        // Populate the button list with empty buttons
         for (int i = 0; i < 18; i++) {
             BoardButton emptyBoardButton = new BoardButton("", R.drawable.plus_icon);
             boardButtonList.add(emptyBoardButton);
         }
     }
     private void initTTS() {
-        // Initialize the TextToSpeech engine in your onCreate() or onStart() method
         ttsService = new TextToSpeech(CreateBoardActivity.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -134,7 +143,6 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
             }
         });
     }
-    // Implement a method to speak the message
     private void speakMessage(String message) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ttsService.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
@@ -152,7 +160,9 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
                  *  implement logic to create new board with the button array
                  *  and save the new board to firestore database
                  */
-
+                String boardName = boardNameTextview.getText().toString();
+                CommunicationBoard newBoard = createBoardObject(boardName, boardButtonList);
+                saveBoardToFirestore(newBoard);
             }
         });
         menuBtn.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +179,35 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
             }
         });
     }
+
+    private void saveBoardToFirestore(CommunicationBoard newBoard) {
+        try{
+            Map<String, Object> commBoard = new HashMap<>();
+            commBoard.put("boardName", newBoard.getBoardName());
+            commBoard.put("boardButtons", newBoard.getButtons());
+            db.collection("presetBoards")
+                    .add(commBoard).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Utility.showToast(CreateBoardActivity.this, "Added new board");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Utility.showToast(CreateBoardActivity.this, e.getLocalizedMessage());
+                        }
+                    });
+        }
+        catch (Exception ex){
+            Utility.showToast(CreateBoardActivity.this, ex.getLocalizedMessage());
+        }
+    }
+
+    private CommunicationBoard createBoardObject(String boardName, ArrayList<BoardButton> boardButtonArr) {
+        return new CommunicationBoard(boardName, boardButtonArr);
+    }
+
 
     private void showPopupMenu() {
         // Show a popup menu for logout and home page options
