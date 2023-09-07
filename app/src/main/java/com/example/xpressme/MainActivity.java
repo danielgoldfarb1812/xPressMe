@@ -18,16 +18,21 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements BoardButtonAdapter.ButtonClickListener {
@@ -45,13 +50,13 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
         setContentView(R.layout.activity_main);
         initViews();
         initButtons();
-        setUpButtonGrid();
-        populateButtonList();
+
         boardButtonAdapter.setButtonClickListener(MainActivity.this);
         initTTS();
 
         // Initialize Firebase
         initFirebase();
+
     }
 
     private void initFirebase() {
@@ -93,42 +98,41 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
     }
 
     private void populateButtonList() {
-        // Assuming you have a Firestore database reference
-        CollectionReference boardsCollectionRef = db.collection("presetBoards");
-
-        boardsCollectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        // TODO: find a way to populate the button list from the firebase
+        DocumentReference docRef = db.collection("presetBoards").document("oeafqJoVDL1DSiWX8ozK"); // Replace "documentId" with the actual document ID
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot boardDoc : task.getResult()) {
-                        CollectionReference boardButtonsRef = boardDoc.getReference().collection("boardButtons");
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
 
-                        // Now, fetch the buttons from the subcollection
-                        boardButtonsRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot buttonDoc : task.getResult()) {
-                                        // Assuming each buttonDoc represents a button object
-                                        BoardButton boardButton = buttonDoc.toObject(BoardButton.class);
-                                        boardButtonList.add(boardButton);
-                                    }
+                        String boardName = documentSnapshot.getString("boardName");
+                        boardNameTextview.setText(boardName);
+                        Object boardButtons = documentSnapshot.get("boardButtons");
+                        ArrayList<BoardButton> list = (ArrayList<BoardButton>)boardButtons;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            boardButtonList.addAll(list);
 
-                                    // Once you have populated boardButtonList, notify your RecyclerView adapter
-                                    // assuming mAdapter is your RecyclerView adapter
-                                    boardButtonAdapter.notifyDataSetChanged();
-                                } else {
-                                    // Handle errors when fetching boardButtons
-                                }
-                            }
+                        }
+
                         });
-                    }
+
+
+
+
+
                 } else {
-                    // Handle errors when fetching presetBoards
+                    // Document does not exist
                 }
             }
         });
     }
+
+    private void showErrorMessage(String message) {
+        Utility.showToast(this, message);
+    }
+
 
 
 
@@ -176,6 +180,8 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
         menuBtn = findViewById(R.id.menu_btn);
         boardNameTextview = findViewById(R.id.board_name_textview);
         boardBtnRecyclerView = findViewById(R.id.button_recycler_view);
+        setUpButtonGrid();
+        populateButtonList();
     }
 
     @Override
