@@ -26,6 +26,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements BoardButtonAdapter.ButtonClickListener {
@@ -99,34 +101,24 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
 
     private void populateButtonList() {
         // TODO: find a way to populate the button list from the firebase
-        DocumentReference docRef = db.collection("presetBoards").document("oeafqJoVDL1DSiWX8ozK"); // Replace "documentId" with the actual document ID
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-
-                        String boardName = documentSnapshot.getString("boardName");
-                        boardNameTextview.setText(boardName);
-                        Object boardButtons = documentSnapshot.get("boardButtons");
-                        ArrayList<BoardButton> list = (ArrayList<BoardButton>)boardButtons;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            boardButtonList.addAll(list);
-
+        CollectionReference firstBoardRef = Utility.getPresetBoards();
+        firstBoardRef.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+                            try{
+                                CommunicationBoard board = documentSnapshot.toObject(CommunicationBoard.class);
+                                for (BoardButton btn : board.getButtons()){
+                                    Utility.showToast(MainActivity.this, btn.getButtonLabel());
+                                }
+                            }
+                            catch (Exception ex){
+                                Utility.showToast(MainActivity.this, ex.getLocalizedMessage());
+                            }
                         }
-
-                        });
-
-
-
-
-
-                } else {
-                    // Document does not exist
-                }
-            }
-        });
+                    }
+                });
     }
 
     private void showErrorMessage(String message) {
