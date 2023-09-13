@@ -12,12 +12,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -38,6 +40,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements BoardButtonAdapter.ButtonClickListener {
+    String boardId, boardName;
     ArrayList<BoardButton> boardButtonList;
     AppCompatButton editBtn, menuBtn;
     TextView boardNameTextview;
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        boardId = getIntent().getStringExtra("boardId");
+        boardName = getIntent().getStringExtra("boardName");
         initViews();
         initButtons();
 
@@ -99,33 +104,47 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
         boardBtnRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
-    private void populateButtonList() {
-        // TODO: find a way to populate the button list from the firebase
-        CollectionReference firstBoardRef = Utility.getPresetBoards();
-        firstBoardRef.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-                            try{
-                                CommunicationBoard board = documentSnapshot.toObject(CommunicationBoard.class);
-                                for (BoardButton btn : board.getButtons()){
-                                    Utility.showToast(MainActivity.this, btn.getButtonLabel());
-                                }
-                            }
-                            catch (Exception ex){
-                                Utility.showToast(MainActivity.this, ex.getLocalizedMessage());
+    private void populateButtonList(String boardId) {
+        DocumentReference boardRef = db.collection("presetBoards").document(boardId);
+        boardRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    // Check if the document exists
+                    List<Map<String, Object>> boardButtons = (List<Map<String, Object>>) documentSnapshot.get("boardButtons");
+                    if (boardButtons != null) {
+                        // Now, you have the list of boardButtons, and you can process it as needed
+                        for (Map<String, Object> buttonData : boardButtons) {
+                            String buttonLabel = (String) buttonData.get("buttonLabel");
+                            String ttsMessage = (String) buttonData.get("ttsMessage");
+                            int btnDrawable = (int)(long) buttonData.get("imgDrawable");
+                            // You can add this button data to your boardButtonList or perform any other actions
+                            if (btnDrawable != R.drawable.plus_icon){
+                                BoardButton boardButton = new BoardButton(buttonLabel, btnDrawable, ttsMessage);
+                                boardButtonList.add(boardButton);
+                                boardButtonAdapter.notifyDataSetChanged();
                             }
                         }
+                    } else {
+                        // The boardButtons field is null or doesn't exist
                     }
-                });
+                } else {
+                    // The document doesn't exist
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Handle errors here
+            }
+        });
     }
+
+
 
     private void showErrorMessage(String message) {
         Utility.showToast(this, message);
     }
-
-
 
 
     private void showPopupMenu() {
@@ -156,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
 
     private void navigateToBoardSelection() {
         // Navigate to the board selection screen
-        startActivity(new Intent(MainActivity.this, MainActivity.class));
+        startActivity(new Intent(MainActivity.this, BoardSelectionActivity.class));
         finish();
     }
 
@@ -173,7 +192,12 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
         boardNameTextview = findViewById(R.id.board_name_textview);
         boardBtnRecyclerView = findViewById(R.id.button_recycler_view);
         setUpButtonGrid();
-        populateButtonList();
+        if (boardId != null) {
+            // Now, you have the board ID, and you can use it to fetch the corresponding board's buttons from Firebase
+            populateButtonList(boardId);
+            boardNameTextview.setText(boardName);
+        }
+
     }
 
     @Override
@@ -208,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
         String message = boardButtonList.get(position).getTtsMessage();
         speakMessage(message);
     }
+
     private void speakMessage(String message) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ttsService.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);

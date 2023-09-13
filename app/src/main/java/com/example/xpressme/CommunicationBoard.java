@@ -3,6 +3,7 @@ package com.example.xpressme;
 import java.util.ArrayList;
 
 public class CommunicationBoard {
+    String boardId;
     String boardName;
     String boardOwnerId;
     ArrayList<BoardButton> boardButtons;
@@ -13,7 +14,18 @@ public class CommunicationBoard {
         this.boardName = boardName;
         this.boardButtons = btnArr;
     }
+    public CommunicationBoard(String boardName){
 
+        this.boardName = boardName;
+    }
+
+    public void setBoardId(String boardId) {
+        this.boardId = boardId;
+    }
+
+    public String getBoardId() {
+        return boardId;
+    }
 
     public String getBoardName() {
         return boardName;

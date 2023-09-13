@@ -18,6 +18,11 @@ public class BoardButton {
         this.buttonLabel = buttonLabel;
         this.setImgDrawable(imgDrawable);
     }
+    public BoardButton(String buttonLabel, int imgDrawable, String ttsMessage){
+        this.buttonLabel = buttonLabel;
+        this.setImgDrawable(imgDrawable);
+        this.ttsMessage = ttsMessage;
+    }
 
     public int getImgDrawable() {
         return imgDrawable;

@@ -24,12 +24,10 @@ import java.util.ArrayList;
 public class CreateButtonDialogFragment extends DialogFragment implements ImageSelectionFragment.ImageSelectionListener{
     // TODO: add logic to select button image from existing images (drawable)
 
-
     AppCompatButton btnSampleImg;
     // Define the TextToSpeech object to use
     private TextToSpeech ttsService;
     // Define the interface to communicate data back to the activity
-
 
     public interface ButtonCreationDialogListener {
         void onButtonCreated(BoardButton boardButton);

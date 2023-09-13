@@ -25,7 +25,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             // check if user is logged in. if they are, move to main activity
             if (FirebaseAuth.getInstance().getCurrentUser() != null){
-                startActivity(new Intent(SplashActivity.this, CreateBoardActivity.class));
+                startActivity(new Intent(SplashActivity.this, BoardSelectionActivity.class));
             }
             else{
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));

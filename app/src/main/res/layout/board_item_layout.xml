@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/board_item_background"
+    android:layout_marginTop="25sp"
+    android:id="@+id/board_item_holder"
+    android:clickable="true">
+    <TextView
+        android:id="@+id/board_name_recycler_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:text="Food"
+        android:textSize="30sp"
+        android:padding="30sp"
+        android:textColor="@color/black"
+        />
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="80"/>
+    <ImageView
+        android:id="@+id/delete_board_icon"
+        android:layout_width="30dp"
+        android:layout_height="100dp"
+        android:layout_weight="10"
+        android:src="@drawable/trash_icon"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:padding="30sp"
+        android:textColor="@color/black"
+        android:gravity="end"/>
+
+</LinearLayout>

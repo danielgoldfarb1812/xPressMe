@@ -7,4 +7,10 @@
     <string name="password_error_match">passwords don\'t match!</string>
     <string name="account_create_success_verify">account created successfully!\ncheck your email for verification</string>
     <string name="email_verification_error">email not verified.\nplease verify your email</string>
+    <string-array name="category_array">
+        <item>Food</item>
+        <item>Feelings</item>
+        <item>Needs</item>
+        <item>People</item>
+    </string-array>
 </resources>

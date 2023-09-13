@@ -93,6 +93,7 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
         int position = dialogFragmentPosition;
 
         boardButtonList.get(position).setButtonLabel(boardButton.getButtonLabel());
+        boardButtonList.get(position).setTtsMessage(boardButton.getTtsMessage());
         boardButtonList.get(position).setImgDrawable(boardButton.getImgDrawable());
         boardButtonAdapter.notifyItemChanged(position);
 
@@ -155,11 +156,6 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                 * TODO:
-                 *  implement logic to create new board with the button array
-                 *  and save the new board to firestore database
-                 */
                 String boardName = boardNameTextview.getText().toString();
                 CommunicationBoard newBoard = createBoardObject(boardName, boardButtonList);
                 saveBoardToFirestore(newBoard);
@@ -181,28 +177,39 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
     }
 
     private void saveBoardToFirestore(CommunicationBoard newBoard) {
-        try{
+        try {
+            // Create a new Firestore document reference
+            DocumentReference boardRef = db.collection("presetBoards").document();
+
+            // Set the board's ID to the document reference's ID
+            String boardId = boardRef.getId();
+            newBoard.setBoardId(boardId);
+
+            // Create a map with the board data
             Map<String, Object> commBoard = new HashMap<>();
             commBoard.put("boardName", newBoard.getBoardName());
             commBoard.put("boardButtons", newBoard.getButtons());
-            db.collection("presetBoards")
-                    .add(commBoard).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            commBoard.put("boardId", newBoard.getBoardId());
+
+            // Save the board to Firestore using the document reference
+            boardRef.set(commBoard)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Utility.showToast(CreateBoardActivity.this, "Added new board");
+                        public void onSuccess(Void aVoid) {
+                            //Utility.showToast(CreateBoardActivity.this, "Added new board with ID: " + boardId);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Utility.showToast(CreateBoardActivity.this, e.getLocalizedMessage());
+                            //Utility.showToast(CreateBoardActivity.this, e.getLocalizedMessage());
                         }
                     });
-        }
-        catch (Exception ex){
-            Utility.showToast(CreateBoardActivity.this, ex.getLocalizedMessage());
+        } catch (Exception ex) {
+            //Utility.showToast(CreateBoardActivity.this, ex.getLocalizedMessage());
         }
     }
+
 
     private CommunicationBoard createBoardObject(String boardName, ArrayList<BoardButton> boardButtonArr) {
         return new CommunicationBoard(boardName, boardButtonArr);
@@ -244,7 +251,7 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
 
     private void navigateToBoardSelection() {
         // Navigate to the board selection screen
-        startActivity(new Intent(CreateBoardActivity.this, MainActivity.class));
+        startActivity(new Intent(CreateBoardActivity.this, BoardSelectionActivity.class));
         finish();
     }
 

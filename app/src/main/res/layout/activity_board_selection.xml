@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BoardSelectionActivity"
+    android:background="@color/app_color">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:background="@drawable/gradient_background">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/app_logo" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/logout_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:background="@drawable/gradient_button_bg"
+            android:layout_marginEnd="50dp"
+            android:text="Logout"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose a board"
+            android:layout_centerHorizontal="true"
+            android:textSize="60sp"
+            android:fontFamily="@font/jokerman_regular"
+            android:textColor="@color/black"
+            android:id="@+id/choose_board_textview"
+            />
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/choose_board_textview"
+            >
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/board_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/create_new_board_btn"
+            android:layout_below="@id/scroll_view"
+            android:weightSum="100"
+            android:layout_marginTop="25sp"
+            android:background="@drawable/create_new_board_btn_background"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="New Board"
+                android:textSize="30sp"
+                android:padding="30sp"
+                android:textColor="@color/black"
+                />
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="80"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="+"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:padding="30sp"
+                android:textColor="@color/black"
+                android:gravity="end"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

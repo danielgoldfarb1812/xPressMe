@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Utility {
     public static void showToast(Context c, String msg){
-        Toast.makeText(c, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(c, msg, Toast.LENGTH_LONG).show();
     }
     // get preset board from firebase
     public static CollectionReference getPresetBoards(){

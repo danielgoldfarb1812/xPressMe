@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                 // התחברות הצליחה
                 if (Objects.requireNonNull(fAuth.getCurrentUser()).isEmailVerified()){
                     // האימייל מאומת - עבור למסך הראשי
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, BoardSelectionActivity.class));
                     finish();
                 }
                 else{
