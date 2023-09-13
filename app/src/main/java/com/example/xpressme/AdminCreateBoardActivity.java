@@ -24,15 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.grpc.okhttp.internal.Util;
-
-public class CreateBoardActivity extends AppCompatActivity implements BoardButtonAdapter.ButtonClickListener, CreateButtonDialogFragment.ButtonCreationDialogListener{
+public class AdminCreateBoardActivity extends AppCompatActivity implements BoardButtonAdapter.ButtonClickListener, CreateButtonDialogFragment.ButtonCreationDialogListener{
     TextToSpeech ttsService;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -61,7 +57,7 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
         initViews();
 
         // Pass the activity as a listener to the adapter
-        boardButtonAdapter.setButtonClickListener(CreateBoardActivity.this);
+        boardButtonAdapter.setButtonClickListener(AdminCreateBoardActivity.this);
 
         // Set up click listeners for buttons
         initButtons();
@@ -137,7 +133,7 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
         }
     }
     private void initTTS() {
-        ttsService = new TextToSpeech(CreateBoardActivity.this, new TextToSpeech.OnInitListener() {
+        ttsService = new TextToSpeech(AdminCreateBoardActivity.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
 
@@ -196,7 +192,7 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            //Utility.showToast(CreateBoardActivity.this, "Added new board with ID: " + boardId);
+                            Utility.showToast(AdminCreateBoardActivity.this, "Successfully created board " + boardNameTextview.getText().toString());
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -218,7 +214,7 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
 
     private void showPopupMenu() {
         // Show a popup menu for logout and home page options
-        PopupMenu popupMenu = new PopupMenu(CreateBoardActivity.this, menuBtn);
+        PopupMenu popupMenu = new PopupMenu(AdminCreateBoardActivity.this, menuBtn);
         popupMenu.getMenu().add("Board Selection");
         popupMenu.getMenu().add("Logout");
         popupMenu.show();
@@ -245,13 +241,13 @@ public class CreateBoardActivity extends AppCompatActivity implements BoardButto
     private void handleLogout() {
         // Sign out the current user and navigate to the login screen
         firebaseAuth.signOut();
-        startActivity(new Intent(CreateBoardActivity.this, LoginActivity.class));
+        startActivity(new Intent(AdminCreateBoardActivity.this, LoginActivity.class));
         finish();
     }
 
     private void navigateToBoardSelection() {
         // Navigate to the board selection screen
-        startActivity(new Intent(CreateBoardActivity.this, BoardSelectionActivity.class));
+        startActivity(new Intent(AdminCreateBoardActivity.this, BoardSelectionActivity.class));
         finish();
     }
 

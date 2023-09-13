@@ -1,9 +1,7 @@
 package com.example.xpressme;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,18 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class BoardSelectionActivity extends AppCompatActivity {
+
+    String adminUid = AdminUser.getUID();
     ArrayList<CommunicationBoard> boardsList;
     AppCompatButton logoutBtn;
     RecyclerView boardsRecyclerView;
@@ -91,6 +88,7 @@ public class BoardSelectionActivity extends AppCompatActivity {
             }
         });
         createNewBoardBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 navigateToBoardCreation();
@@ -100,7 +98,12 @@ public class BoardSelectionActivity extends AppCompatActivity {
     }
 
     private void navigateToBoardCreation() {
-        startActivity(new Intent(BoardSelectionActivity.this, CreateBoardActivity.class));
+        /* TODO:
+         check if current user ID is equal to adminUid.
+         if it is, move to the AdminCreateBoardActivity.
+         else, move to regular CreateBoardActivity.
+     */
+        startActivity(new Intent(BoardSelectionActivity.this, AdminCreateBoardActivity.class));
         finish();
     }
 

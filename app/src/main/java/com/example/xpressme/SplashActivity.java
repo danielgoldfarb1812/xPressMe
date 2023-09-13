@@ -12,7 +12,17 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
-
+    /*
+      TODO:
+        edit board
+        delete board
+        move to another board by button press
+        create board for users
+        upload images and record audio (be able to access from different devices)
+        instructions
+        demonstration clip
+        admin login: for creating additional presets
+     */
     ImageView gifLeft, gifRight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -72,9 +72,20 @@ public class LoginActivity extends AppCompatActivity {
         if (!isValidated){
             return;
         }
+        boolean isAdmin = validateAdmin(email, password);
+        if (isAdmin){
+            loginWithFirebase(email, password);
+            startActivity(new Intent(LoginActivity.this, AdminCreateBoardActivity.class));
+            finish();
+            return;
+        }
 
         // התחברות עם האימייל והסיסמה לפיירבייס
         loginWithFirebase(email, password);
+    }
+
+    private boolean validateAdmin(String email, String password) {
+        return email.equals("admin@admin.admin") && password.equals("administrator");
     }
 
     private void loginWithFirebase(String email, String password) {

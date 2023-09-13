@@ -28,7 +28,7 @@
             android:name=".ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateBoardActivity"
+            android:name=".AdminCreateBoardActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
