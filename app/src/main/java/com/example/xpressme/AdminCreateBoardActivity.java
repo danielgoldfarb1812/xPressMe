@@ -2,6 +2,7 @@ package com.example.xpressme;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ public class AdminCreateBoardActivity extends AppCompatActivity implements Board
     android.widget.Button confirmBoardNameBtn;
     EditText boardNameEdittext;
     androidx.appcompat.widget.AppCompatButton menuBtn, doneBtn;
+    ImageView helpBtn;
     private int dialogFragmentPosition;
 
     @Override
@@ -107,6 +110,7 @@ public class AdminCreateBoardActivity extends AppCompatActivity implements Board
         confirmBoardNameBtn = findViewById(R.id.btn_confirm_board_name);
         buttonRecyclerView = findViewById(R.id.button_recycler_view);
         boardNameEdittext = findViewById(R.id.board_name_edittext);
+        helpBtn = findViewById(R.id.help_icon);
 
         // Set up the button grid
         setUpButtonGrid();
@@ -148,6 +152,15 @@ public class AdminCreateBoardActivity extends AppCompatActivity implements Board
         }
     }
     private void initButtons() {
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: fix dimensions for dialog fragment
+                CreateBoardInstructionsFragment fragment = new CreateBoardInstructionsFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragment.show(fragmentManager, "create_board_instructions_dialog");
+            }
+        });
         // Set up click listeners for buttons
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,6 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         instructions
         demonstration clip
         admin login: for creating additional presets
+        if possible - translate to hebrew
      */
     ImageView gifLeft, gifRight;
     @Override

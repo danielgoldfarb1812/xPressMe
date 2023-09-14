@@ -2,6 +2,8 @@ package com.example.xpressme;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 
 public class BoardSelectionActivity extends AppCompatActivity {
 
+    ImageView helpIcon;
     String adminUid = AdminUser.getUID();
     ArrayList<CommunicationBoard> boardsList;
     AppCompatButton logoutBtn;
@@ -95,6 +99,15 @@ public class BoardSelectionActivity extends AppCompatActivity {
                 finish();
             }
         });
+        helpIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: fix dimensions for dialog fragment
+                BoardSelectionInstructionFragment fragment = new BoardSelectionInstructionFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragment.show(fragmentManager, "board_selection_instructions_dialog");
+            }
+        });
     }
 
     private void navigateToBoardCreation() {
@@ -111,6 +124,7 @@ public class BoardSelectionActivity extends AppCompatActivity {
         logoutBtn = findViewById(R.id.logout_btn);
         boardsRecyclerView = findViewById(R.id.board_recycler_view);
         createNewBoardBtn = findViewById(R.id.create_new_board_btn);
+        helpIcon = findViewById(R.id.help_icon);
         // Set up the boards list
         setUpBoardsList();
 

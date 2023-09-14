@@ -22,9 +22,7 @@ import androidx.fragment.app.DialogFragment;
 import java.util.ArrayList;
 
 public class CreateButtonDialogFragment extends DialogFragment implements ImageSelectionFragment.ImageSelectionListener{
-    // TODO: add logic to select button image from existing images (drawable)
 
-    AppCompatButton btnSampleImg;
     // Define the TextToSpeech object to use
     private TextToSpeech ttsService;
     // Define the interface to communicate data back to the activity
@@ -38,7 +36,7 @@ public class CreateButtonDialogFragment extends DialogFragment implements ImageS
     private TextView btnTargetTextView, btnTargetLabel;
     private ImageView btnImgHolder;
     private CheckBox hasTargetCheckBox;
-    private AppCompatButton saveBtn, cancelBtn, deleteBtn, testSpeechBtn;
+    private AppCompatButton saveBtn, cancelBtn, deleteBtn, testSpeechBtn, btnSampleImg;
     private int position; // Added to track which button was clicked
 
     // Create a new instance of the dialog fragment with a position argument

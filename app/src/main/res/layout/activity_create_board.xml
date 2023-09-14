@@ -81,6 +81,12 @@
         android:layout_marginTop="15sp" />
 
 
-
-
+    <ImageView
+        android:id="@+id/help_icon"
+        android:layout_width="109dp"
+        android:layout_height="212dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="50dp"
+        android:src="@drawable/help_icon" />
 </RelativeLayout>

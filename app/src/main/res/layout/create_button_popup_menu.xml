@@ -35,7 +35,7 @@
             android:layout_height="50dp"
             android:layout_below="@id/btn_label_textview"
             android:background="@drawable/edittext_color_with_border"
-            android:hint="Enter boardButton label"
+            android:hint="Text to show on the button"
             android:padding="10sp" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:layout_height="50dp"
             android:layout_below="@id/btn_message_textview"
             android:background="@drawable/edittext_color_with_border"
-            android:hint="Enter boardButton message"
+            android:hint="Message to be played"
             android:padding="10sp" />
 
         <androidx.appcompat.widget.AppCompatButton

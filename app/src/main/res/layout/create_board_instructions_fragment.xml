@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/form_color_with_border">
+
+
+        <TextView
+            android:id="@+id/instructions_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How to create a board?"
+            android:layout_centerHorizontal="true"
+            android:textSize="100sp"
+            android:fontFamily="@font/jokerman_regular"
+            android:textColor="@color/black"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/instructions_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. Enter the board name"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2. Click on confirm board name button"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_2"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. Click on any plus button"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_3"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4. Enter the text that will be shown inside the button"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5. Enter the message that will be spoken when this button is pressed"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_2"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="6. To test the message click on 'TEST SPEECH':"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_3"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="7. Select an image for the button"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_4"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="8. You can choose from various categories"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_select_image_1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="9. Slide left and right to choose the image"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_select_image_2"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="10. When you're done selecting an image, click on OK"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_select_image_3"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="11. You will see the selected image inside this small frame"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_5"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="12. If you wish to cancel this button creation, click on CANCEL or outside the dialog box"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_6"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="13. To save the new button click on SAVE"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_7"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="14. You will see the new button in the grid"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_4"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="15. You can create additional buttons in any position"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_5"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="16. When finished, click on DONE"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_6"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="17. Navigate to board selection to see your new board"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_7"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_main_8"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="18. You will see your new board in the list"
+                    android:textSize="70sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/you_will_see_your_new_board_here"/>
+            </LinearLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+
+</RelativeLayout>

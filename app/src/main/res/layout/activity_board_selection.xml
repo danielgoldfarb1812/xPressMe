@@ -14,6 +14,13 @@
         android:orientation="horizontal"
         android:background="@drawable/gradient_background">
 
+        <ImageView
+            android:id="@+id/help_icon"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/help_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="50dp"/>
 
         <ImageView
             android:layout_width="match_parent"
