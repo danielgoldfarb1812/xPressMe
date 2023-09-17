@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--תצוגה יחסית - כל אלמנט ביחס לאלמנטים אחרים-->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -25,11 +26,12 @@
       android:layout_marginTop="100sp"/>
 </RelativeLayout>
 
+<!--  תצוגה לרוחב-->
   <LinearLayout
       android:id="@+id/body"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-    android:layout_below="@id/header"
+      android:layout_below="@id/header"
       android:orientation="horizontal"
       android:weightSum="9"
     >

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,11 +104,16 @@ public class BoardSelectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: fix dimensions for dialog fragment
-                BoardSelectionInstructionFragment fragment = new BoardSelectionInstructionFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragment.show(fragmentManager, "board_selection_instructions_dialog");
+                showHelpDialog();
             }
         });
+    }
+
+    private void showHelpDialog() {
+        final Dialog helpDialog = new Dialog(BoardSelectionActivity.this);
+        helpDialog.setContentView(R.layout.board_selection_instructions_fragment);
+        helpDialog.getWindow().setLayout(1200, 800);
+        helpDialog.show();
     }
 
     private void navigateToBoardCreation() {

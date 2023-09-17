@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<!--    תפריט נפתח של קטגוריות-->
     <Spinner
         android:id="@+id/categorySpinner"
         android:layout_width="match_parent"
@@ -22,6 +23,7 @@
         android:layout_below="@id/categorySpinner"
         tools:ignore="SpeakableTextPresentCheck" />
 
+<!--    גלילה של תמונות-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOK"
         android:layout_width="wrap_content"

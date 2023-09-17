@@ -20,11 +20,14 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    // הגדרת אלמנטים של UI
     EditText firstNameEditText, lastNameEditText, emailEditText, passwordEditText, passwordConfirmEditText, phoneEditText;
     TextView loginTextView;
     Button registerBtn;
+    // הגדרת firebase, firestore
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initButtons() {
+        // טיפול בלחיצה על טקסט "כבר יש לך חשבון? התחבר כאן"
         loginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+        // טיפול בלחיצה על כפתור הרישום
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,46 +55,47 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
+        // קבלת נתונים מתיבות הטקסט
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
         String confirmPassword = passwordConfirmEditText.getText().toString();
 
+        // בדיקת תקינות ויצירת החשבון אם הנתונים תקינים
         boolean isValidated = validateData(email, password, confirmPassword);
-        if (!isValidated){
+        if (!isValidated) {
             return;
         }
         createAccountInFirebase(email, password);
     }
 
-    private User createUserObject(){
-        // get all texts from edittext
+    private User createUserObject() {
+        // קבלת נתונים מתיבות הטקסט
         String firstName = firstNameEditText.getText().toString();
         String lastName = lastNameEditText.getText().toString();
         String email = emailEditText.getText().toString();
         String phone = phoneEditText.getText().toString();
-        // check for phone input and call the appropriate constructor
-        if (phone.isEmpty()){
-            return new User(firstName,lastName,email);
+
+        // בדיקת האם הוזן מספר טלפון ובהתאם יצירת אובייקט מתאים
+        if (phone.isEmpty()) {
+            return new User(firstName, lastName, email);
         }
-        return new User(firstName,lastName,email,phone);
+        return new User(firstName, lastName, email, phone);
     }
+
     private void createAccountInFirebase(String email, String password) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this,
                 task -> {
-
-                    if (task.isSuccessful()){
-                        // create new user collection
+                    if (task.isSuccessful()) {
+                        // יצירת החשבון בהצלחה
                         User newUserObject = createUserObject();
                         newUserObject.setuId(firebaseAuth.getCurrentUser().getUid());
-                        // יצירת החשבון בהצלחה
                         Utility.showToast(RegisterActivity.this, getResources().getString(R.string.account_create_success_verify));
                         Objects.requireNonNull(firebaseAuth.getCurrentUser()).sendEmailVerification();
                         insertUserIntoFirestore(newUserObject);
                         firebaseAuth.signOut();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();
-                    }
-                    else{
+                    } else {
                         // נכשלה יצירת החשבון
                         Utility.showToast(RegisterActivity.this, Objects.requireNonNull(task.getException()).getLocalizedMessage());
                     }
@@ -97,19 +103,19 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void insertUserIntoFirestore(User user) {
-        // create ref to document with the user UID
+        // יצירת מצביע למסמך עם מזהה המשתמש
         DocumentReference userDocumentRef = firebaseFirestore.collection("users").document(user.getuId());
 
-
-        // convert user object to map
+        // המרת אובייקט המשתמש למפה
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("firstName", user.getFirstName());
         userMap.put("lastName", user.getLastName());
         userMap.put("email", user.getEmail());
-        if (!user.getPhone().isEmpty()){
+        if (!user.getPhone().isEmpty()) {
             userMap.put("phone", user.getPhone());
         }
-        // add the user data to firestore
+
+        // הוספת המידע של המשתמש ל-Firestore
         userDocumentRef.set(userMap).addOnSuccessListener(aVoid -> {
             return;
         }).addOnFailureListener(e -> {
@@ -119,17 +125,17 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validateData(String email, String password, String confirmPassword) {
         // בדיקת תקינות האימייל
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailEditText.setError(getResources().getString(R.string.invalid_email));
             return false;
         }
-        // בדיקת תקינות אורך הסיסמה
-        if (password.length() < 6){
+        // בדיקת אורך הסיסמה
+        if (password.length() < 6) {
             passwordEditText.setError(getResources().getString(R.string.password_error_length));
             return false;
         }
         // בדיקת התאמה בין הסיסמאות
-        if (!password.equals(confirmPassword)){
+        if (!password.equals(confirmPassword)) {
             passwordConfirmEditText.setError(getResources().getString(R.string.password_error_match));
             return false;
         }
@@ -137,6 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        // איתור והשמת האלמנטים ב-UI
         firstNameEditText = findViewById(R.id.first_name_user_input);
         lastNameEditText = findViewById(R.id.last_name_user_input);
         emailEditText = findViewById(R.id.email_user_input);
