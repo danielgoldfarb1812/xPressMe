@@ -95,6 +95,27 @@ public class CreateButtonDialogFragment extends DialogFragment implements ImageS
     }
 
     private void initButtons(View view) {
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Check if you have a valid position to delete
+                if (position != -1) {
+                    // Create a new empty button to replace the deleted button
+                    BoardButton emptyButton = new BoardButton("", R.drawable.plus_icon);
+
+                    // Check if the activity implements the listener interface
+                    if (getActivity() instanceof ButtonCreationDialogListener) {
+                        // Send the data to the activity to update the button
+                        ButtonCreationDialogListener listener = (ButtonCreationDialogListener) getActivity();
+                        listener.onButtonCreated(emptyButton);
+                    }
+
+                    // Close the dialog
+                    dismiss();
+                }
+            }
+        });
+
         btnSampleImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -83,6 +83,13 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Create an intent to start AdminCreateBoardActivity in edit mode
+                Intent intent = new Intent(MainActivity.this, AdminCreateBoardActivity.class);
+                intent.putExtra("isEditMode", true); // Set the edit mode flag
+                intent.putExtra("boardId", boardId); // Pass the board ID
+                intent.putExtra("boardName", boardName); // Pass the board name
+                startActivity(intent);
             }
         });
         menuBtn.setOnClickListener(new View.OnClickListener() {
@@ -180,9 +187,32 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
 
     private void handleLogout() {
         // Sign out the current user and navigate to the login screen
-        firebaseAuth.signOut();
-        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        finish();
+        showLogoutConfirmDialog();
+    }
+
+    private void showLogoutConfirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DarkAlertDialog);
+        builder.setTitle("Sign Out Confirmation");
+        builder.setMessage("Are you sure you want to sign out?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Perform the sign-out action here
+                // You can call a method to handle the sign-out logic
+                firebaseAuth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void initViews() {

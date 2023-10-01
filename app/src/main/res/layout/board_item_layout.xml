@@ -16,20 +16,7 @@
         android:padding="30sp"
         android:textColor="@color/black"
         />
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="80"/>
-    <ImageView
-        android:id="@+id/delete_board_icon"
-        android:layout_width="30dp"
-        android:layout_height="100dp"
-        android:layout_weight="10"
-        android:src="@drawable/trash_icon"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:padding="30sp"
-        android:textColor="@color/black"
-        android:gravity="end"/>
+
+
 
 </LinearLayout>

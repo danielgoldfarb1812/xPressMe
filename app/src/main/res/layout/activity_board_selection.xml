@@ -52,7 +52,6 @@
             android:text="Choose a board"
             android:layout_centerHorizontal="true"
             android:textSize="60sp"
-            android:fontFamily="@font/jokerman_regular"
             android:textColor="@color/black"
             android:id="@+id/choose_board_textview"
             />

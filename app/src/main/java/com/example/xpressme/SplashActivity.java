@@ -14,16 +14,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SplashActivity extends AppCompatActivity {
     /*
       TODO:
-        confirmation dialogs for logging out
-        edit board
-        delete board
         move to another board by button press
-        create board for users
         upload images and record audio (be able to access from different devices)
-        instructions
-        demonstration clip
-        admin login: for creating additional presets
-        if possible - translate to hebrew
+        update instructions to include delete button and edit board
+        create board for users
      */
     ImageView gifLeft, gifRight;
     @Override

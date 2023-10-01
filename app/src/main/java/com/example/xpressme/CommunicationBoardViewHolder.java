@@ -9,13 +9,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CommunicationBoardViewHolder extends RecyclerView.ViewHolder{
-    protected ImageView deleteBoardIcon;
     protected TextView boardNameTextview;
     protected LinearLayout boardItemHolder;
 
     public CommunicationBoardViewHolder(View itemView) {
         super(itemView);
-        deleteBoardIcon = itemView.findViewById(R.id.delete_board_icon);
         boardNameTextview = itemView.findViewById(R.id.board_name_recycler_textview);
         boardItemHolder = itemView.findViewById(R.id.board_item_holder);
     }

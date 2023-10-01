@@ -1,5 +1,6 @@
 package com.example.xpressme;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.DialogFragment;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -116,7 +118,9 @@ public class BoardSelectionActivity extends AppCompatActivity {
     }
 
     private void navigateToBoardCreation() {
-        startActivity(new Intent(BoardSelectionActivity.this, AdminCreateBoardActivity.class));
+        Intent intent = new Intent(BoardSelectionActivity.this, AdminCreateBoardActivity.class);
+        intent.putExtra("isEditMode", false); // Set the edit mode flag
+        startActivity(intent);
         finish();
     }
 
@@ -136,8 +140,32 @@ public class BoardSelectionActivity extends AppCompatActivity {
 
     private void handleLogout() {
         // Sign out the current user and navigate to the login screen
-        fAuth.signOut();
-        startActivity(new Intent(BoardSelectionActivity.this, LoginActivity.class));
-        finish();
+        showLogoutConfirmDialog();
+
+    }
+
+    private void showLogoutConfirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DarkAlertDialog);
+        builder.setTitle("Sign Out Confirmation");
+        builder.setMessage("Are you sure you want to sign out?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Perform the sign-out action here
+                // You can call a method to handle the sign-out logic
+                fAuth.signOut();
+                startActivity(new Intent(BoardSelectionActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

@@ -16,7 +16,6 @@
             android:layout_centerHorizontal="true"
             android:text="Board selection instructions"
             android:textSize="50sp"
-            android:fontFamily="@font/jokerman_regular"
             android:textColor="@color/black"/>
 
         <ScrollView
