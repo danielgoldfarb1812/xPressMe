@@ -103,7 +103,6 @@ public class BoardSelectionActivity extends AppCompatActivity {
         helpIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: fix dimensions for dialog fragment
                 showHelpDialog();
             }
         });
@@ -112,16 +111,11 @@ public class BoardSelectionActivity extends AppCompatActivity {
     private void showHelpDialog() {
         final Dialog helpDialog = new Dialog(BoardSelectionActivity.this);
         helpDialog.setContentView(R.layout.board_selection_instructions_fragment);
-        helpDialog.getWindow().setLayout(1200, 800);
+        helpDialog.getWindow().setLayout(1600, 1200);
         helpDialog.show();
     }
 
     private void navigateToBoardCreation() {
-        /* TODO:
-         check if current user ID is equal to adminUid.
-         if it is, move to the AdminCreateBoardActivity.
-         else, move to regular CreateBoardActivity.
-     */
         startActivity(new Intent(BoardSelectionActivity.this, AdminCreateBoardActivity.class));
         finish();
     }

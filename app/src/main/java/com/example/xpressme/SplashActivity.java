@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SplashActivity extends AppCompatActivity {
     /*
       TODO:
+        confirmation dialogs for logging out
         edit board
         delete board
         move to another board by button press

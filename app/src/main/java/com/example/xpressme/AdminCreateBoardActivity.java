@@ -211,7 +211,7 @@ public class AdminCreateBoardActivity extends AppCompatActivity implements Board
     private void showHelpDialog() {
         final Dialog helpDialog = new Dialog(AdminCreateBoardActivity.this);
         helpDialog.setContentView(R.layout.create_board_instructions_fragment);
-        helpDialog.getWindow().setLayout(1200, 800);
+        helpDialog.getWindow().setLayout(1600, 1200);
         helpDialog.show();
     }
 
@@ -285,7 +285,6 @@ public class AdminCreateBoardActivity extends AppCompatActivity implements Board
 
     // התנתקות מהחשבון הנוכחי וניווט למסך ההתחברות
     private void handleLogout() {
-        //TODO: הצג תיבת דיאלוג כדי לוודא שהמשתמש באמת רוצה להתנתק
         firebaseAuth.signOut();
         startActivity(new Intent(AdminCreateBoardActivity.this, LoginActivity.class));
         //סגירת המסך הנוכחי כדי שלא ייפתח בלחיצה על back

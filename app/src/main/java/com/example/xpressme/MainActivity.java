@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements BoardButtonAdapte
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: implement logic for editing current board
             }
         });
         menuBtn.setOnClickListener(new View.OnClickListener() {
