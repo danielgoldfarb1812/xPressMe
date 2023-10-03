@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/form_color_with_border">
+        android:background="@drawable/instructions_color_with_border">
 
 
         <TextView
@@ -152,7 +152,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="12. If you wish to cancel this button creation, click on CANCEL or outside the dialog box"
+                    android:text="12. To save the button, click on SAVE"
                     android:textSize="30sp"
                     android:textColor="@color/black"/>
                 <ImageView
@@ -160,10 +160,11 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/create_board_instructions_button_dialog_6"/>
 
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="13. To save the new button click on SAVE"
+                    android:text="13. To delete the button from the board, click on DELETE"
                     android:textSize="30sp"
                     android:textColor="@color/black"/>
                 <ImageView
@@ -174,7 +175,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="14. You will see the new button in the grid"
+                    android:text="14. To cancel the changes, click CANCEL"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/create_board_instructions_button_dialog_8"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="15. You will see the new button in the grid"
                     android:textSize="30sp"
                     android:textColor="@color/black"/>
                 <ImageView
@@ -185,7 +196,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="15. You can create additional buttons in any position"
+                    android:text="16. You can create additional buttons in any position"
                     android:textSize="30sp"
                     android:textColor="@color/black"/>
                 <ImageView
@@ -196,7 +207,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="16. When finished, click on DONE"
+                    android:text="17. When finished, click on DONE"
                     android:textSize="30sp"
                     android:textColor="@color/black"/>
                 <ImageView
@@ -208,7 +219,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="17. Navigate to board selection to see your new board"
+                    android:text="18. Navigate to board selection to see your new board"
                     android:textSize="30sp"
                     android:textColor="@color/black"/>
                 <ImageView
@@ -223,13 +234,46 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="18. You will see your new board in the list"
+                    android:text="19. You will see your new board in the list"
                     android:textSize="30sp"
                     android:textColor="@color/black"/>
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/you_will_see_your_new_board_here"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="20. You can edit existing boards by selecting them and clicking on EDIT"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/edit_board_1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="21. Change, delete, or add new buttons to the board"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/edit_board_2"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="22. To delete the board, click DELETE BOARD"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/edit_board_3"/>
             </LinearLayout>
 
         </ScrollView>
