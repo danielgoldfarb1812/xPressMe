@@ -6,6 +6,7 @@ public class CommunicationBoard {
     String boardId;
     String boardName;
     String boardOwnerId;
+    int previewDrawable;
     ArrayList<BoardButton> boardButtons;
 
     // default constructor for presets. no need for owner id yet
@@ -17,6 +18,14 @@ public class CommunicationBoard {
     public CommunicationBoard(String boardName){
 
         this.boardName = boardName;
+    }
+
+    public int getPreviewDrawable() {
+        return previewDrawable;
+    }
+
+    public void setPreviewDrawable(int previewDrawable) {
+        this.previewDrawable = previewDrawable;
     }
 
     public void setBoardId(String boardId) {

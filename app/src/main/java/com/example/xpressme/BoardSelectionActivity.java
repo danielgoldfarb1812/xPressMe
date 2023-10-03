@@ -24,6 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import io.grpc.okhttp.internal.Util;
 
 public class BoardSelectionActivity extends AppCompatActivity {
 
@@ -66,10 +69,16 @@ public class BoardSelectionActivity extends AppCompatActivity {
                             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                                 String boardName = document.getString("boardName");
                                 String boardId = document.getString("boardId");
+                                Object boardButtons = document.get("boardButtons");
+                                ArrayList<Object> boardButtonsList = (ArrayList<Object>)boardButtons;
+                                Object firstButtonObj = boardButtonsList.get(0);
+                                // NEED TO CAST TO HASHMAP AND GET IMGDRAWABLE
+                                HashMap<String, Object> firstBtnMap = (HashMap<String, Object>)firstButtonObj;
+                                int previewDrawable = (int)(long)firstBtnMap.get("imgDrawable");
                                 CommunicationBoard communicationBoard = new CommunicationBoard(boardName);
                                 communicationBoard.setBoardId(boardId);
+                                communicationBoard.setPreviewDrawable(previewDrawable);
                                 boardsList.add(communicationBoard);
-                                Log.d("BoardSelectionActivity", "Added board: " + boardName);
                             }
                             boardAdapter.notifyDataSetChanged(); // Notify the adapter of the data change
 

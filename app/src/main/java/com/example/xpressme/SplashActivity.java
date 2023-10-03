@@ -14,10 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SplashActivity extends AppCompatActivity {
     /*
       TODO:
-        move to another board by button press
-        upload images and record audio (be able to access from different devices)
         update instructions to include delete button and edit board
-        create board for users
      */
     ImageView gifLeft, gifRight;
     @Override
@@ -29,7 +26,6 @@ public class SplashActivity extends AppCompatActivity {
 
         int DELAY_TIME = 2000;
         new Handler().postDelayed(() -> {
-            // check if user is logged in. if they are, move to main activity
             if (FirebaseAuth.getInstance().getCurrentUser() != null){
                 startActivity(new Intent(SplashActivity.this, BoardSelectionActivity.class));
             }

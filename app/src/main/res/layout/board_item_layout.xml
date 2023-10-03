@@ -5,17 +5,35 @@
     android:background="@drawable/board_item_background"
     android:layout_marginTop="25sp"
     android:id="@+id/board_item_holder"
+    android:orientation="horizontal"
+    android:weightSum="100"
     android:clickable="true">
     <TextView
         android:id="@+id/board_name_recycler_textview"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
+        android:layout_weight="20"
         android:text="Food"
         android:textSize="30sp"
         android:padding="30sp"
         android:textColor="@color/black"
         />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="70"/>
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+        <ImageView
+            android:id="@+id/board_buttons_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/edittext_color_with_border"/>
+    </FrameLayout>
+
 
 
 
